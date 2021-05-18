@@ -1,4 +1,4 @@
-package com.personal.development.learning.linkedlist;
+package com.personal.development.learning.linkedlist.singlylinkedlist;
 
 /**
  * Implementation of a SinglyLinkedList
@@ -10,6 +10,17 @@ public class SinglyLinkedList<T> {
     private Node<T> tail;
     private int size;
     
+    public SinglyLinkedList () {
+        head = new Node<>(null);
+        tail = head;
+        size = 0;
+    }
+    
+    public SinglyLinkedList (T data) {
+        head = new Node<>(data);
+        tail = head;
+        size = 1;
+    }
     public void addToFront(T data) {
         if (data == null) {
             throw new IllegalArgumentException("Error due to Null Data Value");
@@ -18,11 +29,10 @@ public class SinglyLinkedList<T> {
         if (isEmpty()) {
             head = newHead;
             tail = head;
-            size++;
-            return;
+        } else {
+            newHead.setNext(head);
+            head = newHead;
         }
-        newHead.setNext(head);
-        head = newHead;
         size++;
     }
     
@@ -31,16 +41,12 @@ public class SinglyLinkedList<T> {
             throw new IllegalArgumentException("Error due to Null Data Value");
         }
         Node<T> newTail = new Node(data);
-        if (isEmpty() ) {
-            tail = newTail;
-            head = tail;
-        } else if (size == 1) {
-            tail = newTail;
-            head.setNext(tail);
+        if (isEmpty()) {
+            head = newTail;
         } else {
             tail.setNext(newTail);
-            tail = newTail;
         }
+        tail = newTail;
         size++;
     }
     
@@ -118,17 +124,13 @@ public class SinglyLinkedList<T> {
             currentNode = currentNode.getNext();
         }
         if (index == 0) {
-            head = head.getNext();
-            if (size <= 2) {
-                tail = head;
-            }
+            return removeFromFront();
         } else if (index == size - 1) {
-            tail = previousNode;
-            previousNode.setNext(null);
+            return removeFromBack();
         } else {
             previousNode.setNext(currentNode.getNext());
+            size--;
         }
-        size--;
         return currentNode.getData();
     }
 
@@ -142,16 +144,12 @@ public class SinglyLinkedList<T> {
         for (int i = 0; i < size; i++) {
             if (currentNode.getData().equals(data)) {
                 if (i == 0) {
-                    head = head.getNext();
-                    if (size == 1) {
-                        tail = head;
-                    }
-                }  else if (i == size - 1) {
-                        tail = previousNode;
-                        previousNode.setNext(null);
-                } else {
-                    previousNode.setNext(currentNode.getNext());
+                    return removeFromFront();
                 }
+                if (i == size - 1) {
+                     return removeFromBack();
+                }
+                previousNode.setNext(currentNode.getNext());
                 size--;
                 return currentNode.getData();
             }
