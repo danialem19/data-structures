@@ -9,21 +9,35 @@ public class ArrayList<T> {
     private T[] backingArray;
     private int size;
     private int INITIAL_CAPACITY = 10;
-
-
+    
     public ArrayList() {
         backingArray = (T[]) new Object[INITIAL_CAPACITY];
         size = 0;
     }
     
-    private void increaseBackingArray() {
-        if (size == backingArray.length) {
-            T[] newArray = (T[]) new Object[2 * backingArray.length];
-            for (int i = 0; i < backingArray.length; i++) {
-                newArray[i] = backingArray[i];
-            }
-            backingArray = newArray;
+    public void addToBack(T data) {
+        if (data == null) {
+            throw new IllegalArgumentException("ERROR: Data value cannot be Empty/Null");
         }
+        if (backingArrayIsFull()) {
+            increaseBackingArray();
+        }
+        backingArray[size] = data;
+        size++;
+    }
+    
+    public void addToFront(T data) {
+        if (data == null) {
+            throw new IllegalArgumentException("ERROR: Data value cannot be Empty/Null");
+        }
+        if (backingArrayIsFull()) {
+            increaseBackingArray();
+        }
+        for (int i = size; i > 0; i--) {
+            backingArray[i] = backingArray[i - 1];
+        }
+        backingArray[0] = data;
+        size++;
     }
 
     public void addAtIndex(int index, T data) {
@@ -33,37 +47,26 @@ public class ArrayList<T> {
         if (data == null) {
             throw new IllegalArgumentException("ERROR: Data value cannot be Empty/Null");
         }
-        increaseBackingArray();
+        if (backingArrayIsFull()) {
+            increaseBackingArray();
+        }
         for (int i = size; i > index; i--) {
             backingArray[i] = backingArray[i - 1];
         }
         backingArray[index] = data;
         size++;
     }
-
-
-    public void addToFront(T data) {
-        if (data == null) {
-            throw new IllegalArgumentException("ERROR: Data value cannot be Empty/Null");
-        }
-        increaseBackingArray();
-        for (int i = size; i > 0; i--) {
-            backingArray[i] = backingArray[i - 1];
-        }
-        backingArray[0] = data;
-        size++;
+    
+    private boolean backingArrayIsFull() {
+        return size == backingArray.length;
     }
-
-
-    public void addToBack(T data) {
-        if (data == null) {
-            throw new IllegalArgumentException("ERROR: Data value cannot be Empty/Null");
+    private void increaseBackingArray() {
+        T[] newArray = (T[]) new Object[2 * backingArray.length];
+        for (int i = 0; i < backingArray.length; i++) {
+            newArray[i] = backingArray[i];
         }
-        increaseBackingArray();
-        backingArray[size] = data;
-        size++;
+        backingArray = newArray;
     }
-
 
     public T removeAtIndex(int index) {
         if (index < 0 || index >= size) {
@@ -80,7 +83,6 @@ public class ArrayList<T> {
         return theRemoved;
     }
 
-
     public T removeFromFront() {
         if (isEmpty()) {
             return null;
@@ -93,7 +95,6 @@ public class ArrayList<T> {
         size--;
         return theRemoved;
     }
-
 
     public T removeFromBack() {
         if (isEmpty()) {
@@ -112,24 +113,20 @@ public class ArrayList<T> {
         }
         return backingArray[index];
     }
-
-
+    
     public boolean isEmpty() {
         return size == 0;
     }
-
-
+    
     public int size() {
         return size;
     }
-
 
     public void clear() {
         backingArray = (T[]) new Object[INITIAL_CAPACITY];
         size = 0;
     }
-
-
+    
     public Object[] getBackingArray() {
         return backingArray;
     }
