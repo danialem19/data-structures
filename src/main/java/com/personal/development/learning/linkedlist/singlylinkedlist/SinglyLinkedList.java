@@ -1,5 +1,7 @@
 package com.personal.development.learning.linkedlist.singlylinkedlist;
 
+import java.util.Stack;
+
 /**
  * Implementation of a SinglyLinkedList
  *
@@ -201,7 +203,27 @@ public class SinglyLinkedList<T> {
             size = 0;
         }
     }
-    
+
+    public Node reverseListIterative(Node head) {
+        Node prev = null;
+        Node curr = head;
+        while (curr != null) {
+            Node nextTemp = curr.getNext();
+            curr.setNext(prev);
+            prev = curr;
+            curr = nextTemp;
+        }
+        return prev;
+    }
+
+    public Node reverseListRecursive(Node head) {
+        if (head == null || head.getNext() == null) return head;
+        Node p = reverseListRecursive(head.getNext());
+        head.getNext().setNext(head);
+        head.setNext(null);
+        return p;
+    }
+
     public Node<T> getHead() {
         return head;
     }

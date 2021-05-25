@@ -1,5 +1,6 @@
 package com.personal.development.learning.linkedlist;
 
+import com.personal.development.learning.linkedlist.singlylinkedlist.Node;
 import com.personal.development.learning.linkedlist.singlylinkedlist.SinglyLinkedList;
 import org.junit.Test;
 
@@ -188,5 +189,33 @@ public class SinglyLinkedListTest {
 		assertEquals(5, (int)singlyLinkedList.getHead().getData());
 		assertEquals(2, (int)singlyLinkedList.getTail().getData());
 	}
-	
+
+
+	@Test
+	public void reverseListIterativeTest() {
+		SinglyLinkedList<Integer> singlyLinkedList = new SinglyLinkedList(2);
+		singlyLinkedList.addToFront(4);
+		singlyLinkedList.addToFront(3);
+		singlyLinkedList.addToFront(5);
+		Node reverted = singlyLinkedList.reverseListIterative(singlyLinkedList.getHead());
+
+		assertEquals(2, reverted.getData());
+		assertEquals(4, reverted.getNext().getData());
+		assertEquals(3, reverted.getNext().getNext().getData());
+		assertEquals(5, reverted.getNext().getNext().getNext().getData());
+	}
+
+	@Test
+	public void reverseListRecursiveTest() {
+		SinglyLinkedList<Integer> singlyLinkedList = new SinglyLinkedList(2);
+		singlyLinkedList.addToFront(4);
+		singlyLinkedList.addToFront(3);
+		singlyLinkedList.addToFront(5);
+		Node reverted = singlyLinkedList.reverseListRecursive(singlyLinkedList.getHead());
+
+		assertEquals(2, reverted.getData());
+		assertEquals(4, reverted.getNext().getData());
+		assertEquals(3, reverted.getNext().getNext().getData());
+		assertEquals(5, reverted.getNext().getNext().getNext().getData());
+	}
 }
