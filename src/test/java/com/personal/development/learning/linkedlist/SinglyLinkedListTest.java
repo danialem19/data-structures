@@ -218,4 +218,15 @@ public class SinglyLinkedListTest {
 		assertEquals(3, reverted.getNext().getNext().getData());
 		assertEquals(5, reverted.getNext().getNext().getNext().getData());
 	}
+	
+	@Test
+	public void booleanTest() {
+		assertTrue(Boolean.valueOf(null));
+		assertTrue(Boolean.valueOf(true));
+	}
+	
+	@Test
+	public void integerParseTest() {
+		assertEquals(0, Integer.parseInt(""));
+	}
 }
